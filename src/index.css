@@ -1,0 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-size: 100%;
+}
+html,
+body {
+  height: 100% !important;
+}
+body {
+  background-color: #f4f1ea;
+  color: #212121;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+#root {
+  height: 100% !important;
+}
+
+.content-root {
+  display: flex;
+  height: 100% !important;
+}
+
+/* sidebar */
+.side-bar {
+  width: 300px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ccc;
+  transition: 500ms all;
+  scrollbar-width: none;
+}
+::-webkit-scrollbar {
+  width: 0.7em;
+}
+::-webkit-scrollbar-track {
+  background: none;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+.side-bar .logo {
+  display: flex;
+  margin: 10px 0 0 0;
+  padding-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 3em;
+  letter-spacing: 7px;
+  border-bottom: 1px solid #ccc;
+}
+.side-bar ul {
+  list-style-type: none;
+  width: 100%;
+  overflow: auto;
+}
+.side-bar li {
+  /* border-bottom: 1px solid #ccc; */
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  padding-bottom: 12px;
+}
+.side-bar a {
+  text-decoration: none;
+  color: inherit;
+}
+.side-bar li:hover {
+  background-color: #c4dac5;
+  border-radius: 3px;
+}
+.side-bar li span {
+  right: 0;
+  top: 10px;
+  color: #a7a090;
+  font-size: 1em;
+}
+/* /sidebar */
+
+/* flow */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.content header {
+  height: 76px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+}
+
+.flow-box {
+  width: 550px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  overflow: auto;
+  flex-direction: column-reverse;
+}
+.flow-box::before {
+  content: "";
+  margin-bottom: auto;
+}
+.flow-box ul {
+  list-style-type: none;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  word-wrap: break-word;
+  line-height: 24px;
+}
+.flow-box li {
+  background: rgb(246, 249, 247);
+  box-shadow: 0 5px 15px -5px rgb(0 0 0 / 10%);
+  padding: 10px 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.title a {
+  color: #388e3c;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.title a:hover {
+  text-decoration: underline;
+}
+
+.entry {
+  padding: 15px 0 15px 0;
+  position: relative;
+}
+.entry footer {
+  text-align: right;
+  line-height: normal;
+}
+.entry footer a {
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.entry-author a {
+  color: #53a245;
+  font-size: 14px;
+}
+.entry-date a {
+  color: #a7a090;
+  font-size: 12px;
+}
+.flow-box-footer {
+  border-top: 1px solid #ddd;
+  background: #eee;
+  padding: 10px;
+  display: flex;
+  height: 60px;
+}
+/* /flow */
+
+/* loading */
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #00aeef;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+/* /loading */
