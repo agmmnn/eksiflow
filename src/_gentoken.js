@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
 function genToken() {
@@ -17,7 +18,7 @@ function genToken() {
   };
 
   if (local_token && !token_expired()) {
-    console.log("local token: " + local_token);
+    // console.log("local token: " + local_token);
     return Promise.resolve(local_token);
   }
 
@@ -39,9 +40,9 @@ function genToken() {
         localStorage.setItem("token_expires_in", expires_in);
         localStorage.setItem("token_expires_date", expires_date);
 
-        console.log("Your generated anonymous bearer token: " + token);
-        console.log("Expires in: " + expires_in / 3600 + "hrs");
-        console.log("Expiration date: " + expires_date);
+        // console.log("Your generated anonymous bearer token: " + token);
+        // console.log("Expires in: " + expires_in / 3600 + "hrs");
+        // console.log("Expiration date: " + expires_date);
 
         resolve(token);
       })
