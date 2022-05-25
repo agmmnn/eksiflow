@@ -22,7 +22,7 @@ body {
   --delay: 0s;
   --accent: #353c43;
 }
-:root {
+/* :root {
   --body-font: "Source Sans Pro", sans-serif;
   --theme-bg: #1f1d2b;
   --body-color: #808191;
@@ -31,7 +31,7 @@ body {
   --video-bg: #252936;
   --delay: 0s;
   --accent: #dee6ef;
-}
+} */
 
 body {
   font-family: var(--body-font);
