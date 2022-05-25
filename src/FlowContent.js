@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import axios from "axios";
 import genToken from "./_gentoken";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
@@ -20,15 +20,20 @@ export default function FlowEntryList({ pageidx }) {
       )
       .then((data) => data);
 
+  const footerDiv = useRef(null);
   const [lastPage, setLastPage] = useState("1");
-
   const { data, error } = useSWR(
     `https://api.eksisozluk.com/v2/topic/${pageidx}/?p=${lastPage}`,
     fetcher,
     { refreshInterval: 1500 }
   );
 
-  useEffect(() => setLastPage(data ? data.Data.PageCount : "1"), [data]);
+  useEffect(() => {
+    footerDiv.current.scrollIntoView();
+  });
+  useEffect(() => {
+    setLastPage(data ? data.Data.PageCount : "1");
+  }, [data]);
 
   if (error) return <div>error</div>;
   return (
@@ -47,7 +52,7 @@ export default function FlowEntryList({ pageidx }) {
       <div className="main-container">
         <ul>
           <div className="pager">
-            <span>{lastPage}. sayfa 💫</span>
+            <span>{lastPage}. sayfa ↓</span>
           </div>
           {data?.Data.Entries.map((entry) => (
             <div className="entry" key={entry.Id}>
@@ -80,21 +85,20 @@ export default function FlowEntryList({ pageidx }) {
             </div>
           ))}
         </ul>
+        <div className="main-container-footer" ref={footerDiv}></div>
       </div>
     </>
   );
 }
 
 const entrydate = (dt) => {
-  const d = new Date(dt);
-  const n = Date.now();
-  const diff = new Date(n - d);
+  const diff = new Date(Date.now() - new Date(dt));
   const mn = Math.floor(diff.getTime() / (1000 * 60));
-  const sn = Math.floor(diff.getTime() / 1000);
+  const sc = Math.floor(diff.getTime() / 1000);
   if (mn && mn > 0) {
     return `${mn} dk`;
-  } else if (sn > 0) {
-    return `${sn} sn`;
+  } else if (sc > 0) {
+    return `${sc} sn`;
   } else {
     return "now";
   }
