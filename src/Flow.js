@@ -2,7 +2,7 @@ import useSWR from "swr";
 import axios from "axios";
 import genToken from "./_gentoken";
 import FlowContent from "./FlowContent";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
@@ -68,10 +68,6 @@ export const Flow = () => {
   );
 
   const [topicid, setTopicid] = useState(false);
-  useEffect(() => {
-    console.log(topicid);
-    // this.setState({ topicid: topicid });
-  }, [topicid]);
 
   return (
     <>
@@ -149,7 +145,6 @@ export const Flow = () => {
         <FlowContent
           pageidx={topicid ? topicid : data?.Data.Topics[0].TopicId}
         />
-        {/* <div className="main-container-footer"></div> */}
       </div>
     </>
   );
