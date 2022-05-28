@@ -129,9 +129,14 @@ export default function FlowContent({ pageidx }) {
 
 const entrydate = (dt) => {
   const diff = new Date(Date.now() - new Date(dt));
+  const dy = Math.floor(diff.getTime() / (1000 * 3600 * 24));
+  if (dy > 0) return `${dy} gün önce`;
+  const hr = Math.floor(diff.getTime() / (1000 * 3600));
+  if (hr > 0) return `${hr} saat önce`;
   const mn = Math.floor(diff.getTime() / (1000 * 60));
+  if (mn > 0) return `${mn} dk`;
   const sc = Math.floor(diff.getTime() / 1000);
-  return mn && mn > 0 ? `${mn} dk` : sc > 0 ? `${sc} sn` : "now";
+  return sc > 0 ? `${sc} sn` : "şimdi";
 };
 
 // const processContent = (entry) => {
