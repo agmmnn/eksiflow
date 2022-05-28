@@ -46,9 +46,9 @@ export default function FlowContent({ pageidx }) {
     // console.log(entryPool);
   }, [data]);
 
-  useEffect(() => {
-    footerDiv?.current?.scrollIntoView();
-  });
+  // useEffect(() => {
+  //   footerDiv?.current?.scrollIntoView();
+  // });
 
   if (error) return <div>error</div>;
   return (
@@ -62,15 +62,17 @@ export default function FlowContent({ pageidx }) {
         <ul>
           {Object.entries(entryPool).map(([page, entries]) => (
             <div className="entry-page" key={page}>
-              <div className="pager">
-                <a
-                  rel="noreferrer"
-                  target="_blank"
-                  href={pageUrl + "?p=" + page}
-                >
-                  <span>{page}. sayfa ↓</span>
-                </a>
-              </div>
+              {page !== "1" ? (
+                <div className="pager">
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href={pageUrl + "?p=" + page}
+                  >
+                    <span>{page}. sayfa ↓</span>
+                  </a>
+                </div>
+              ) : null}
               {entries.map((entry) => (
                 <div className="entry" key={entry.Id}>
                   <li>
@@ -101,6 +103,21 @@ export default function FlowContent({ pageidx }) {
                   </footer>
                 </div>
               ))}
+              {page === "1" ? (
+                <>
+                  {" "}
+                  <div className="pager">
+                    <a
+                      rel="noreferrer"
+                      target="_blank"
+                      href={pageUrl + "?p=" + page}
+                    >
+                      <span>1. sayfa ↑</span>
+                    </a>
+                  </div>
+                  <div className="threeDot">...</div>
+                </>
+              ) : null}
             </div>
           ))}
         </ul>
