@@ -1,20 +1,20 @@
 import axios from "axios";
 
 const client_secret = process.env.REACT_APP_CLIENT_SECRET;
+const client_unique = "1a62383d-742e-4bcf-bf77-2fe1a1edcd39";
+const api_secret = "68f779c5-4d39-411a-bd12-cbcc50dc83dd";
 
 function genToken() {
   const url = "https://api.eksisozluk.com/v2/account/anonymoustoken";
-  const raw = `Platform=g&Version=2.0.0&Build=51&Api-Secret=68f779c5-4d39-411a-bd12-cbcc50dc83dd&Client-Secret=${client_secret}&ClientUniqueId=1a62383d-742e-4bcf-bf77-2fe1a1edcd39`;
+  const raw_body = `Platform=g&Version=2.0.0&Build=51&Api-Secret=${api_secret}&Client-Secret=${client_secret}&ClientUniqueId=${client_unique}`;
 
   const local_token = localStorage.getItem("token");
 
   const token_expired = () => {
-    const date = new Date(localStorage.getItem("token_expires_date"));
-    if (date.getTime() > Date.now()) {
-      return false;
-    } else {
-      return true;
-    }
+    const token_expires_date = new Date(
+      localStorage.getItem("token_expires_date")
+    );
+    return token_expires_date.getTime() > Date.now() ? false : true;
   };
 
   if (local_token && !token_expired()) {
@@ -24,12 +24,8 @@ function genToken() {
 
   return new Promise((resolve, reject) => {
     axios
-      .post(url, raw, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          // "Content-Length": 184,
-          // Host: "api.eksisozluk.com",
-        },
+      .post(url, raw_body, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
       .then((res) => {
         const token = res.data.Data.access_token;
