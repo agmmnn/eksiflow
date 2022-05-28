@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import useSWR from "swr";
 import axios from "axios";
 import genToken from "./gentoken";
@@ -22,22 +23,29 @@ export default function FlowContent({ pageidx }) {
 
   const footerDiv = useRef(null);
   const [lastPage, setLastPage] = useState("1");
+  const [entryPool, setEntryPool] = useState({});
+
   const { data, error } = useSWR(
-    `https://api.eksisozluk.com/v2/topic/${pageidx}/?p=${lastPage}`,
+    `https://api.eksisozluk.com/v2/topic/${pageidx}/?p=${
+      lastPage !== "1" ? parseInt(lastPage) : 1
+    }`,
     fetcher,
-    { refreshInterval: 1500 }
+    { refreshInterval: 1000 }
   );
 
   useEffect(() => {
-    try {
-      footerDiv.current.scrollIntoView();
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    setEntryPool({});
+  }, [pageidx]);
+
   useEffect(() => {
     setLastPage(data ? data.Data.PageCount : "1");
+    setEntryPool(data ? { ...entryPool, [lastPage]: data.Data.Entries } : {});
+    console.log(entryPool);
   }, [data]);
+
+  useEffect(() => {
+    footerDiv?.current?.scrollIntoView();
+  });
 
   if (error) return <div>error</div>;
   return (
@@ -55,37 +63,41 @@ export default function FlowContent({ pageidx }) {
       </div>
       <div className="main-container">
         <ul>
-          <div className="pager">
-            <span>{lastPage}. sayfa ↓</span>
-          </div>
-          {data?.Data.Entries.map((entry) => (
-            <div className="entry" key={entry.Id}>
-              <li>
-                <div className="content">{entry.Content}</div>
-              </li>
-              <footer>
-                <div className="entry-author">
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href={
-                      "https://eksisozluk.com/biri/" +
-                      entry.Author.Nick.replace(" ", "-")
-                    }
-                  >
-                    {entry.Author.Nick}
-                  </a>
+          {Object.entries(entryPool).map(([page, entries]) => (
+            <div className="entry-page" key={page}>
+              <div className="pager">
+                <span>{page}. sayfa ↓</span>
+              </div>
+              {entries.map((entry) => (
+                <div className="entry" key={entry.Id}>
+                  <li>
+                    <div className="content">{entry.Content}</div>
+                  </li>
+                  <footer>
+                    <div className="entry-author">
+                      <a
+                        rel="noreferrer"
+                        target="_blank"
+                        href={
+                          "https://eksisozluk.com/biri/" +
+                          entry.Author.Nick.replace(" ", "-")
+                        }
+                      >
+                        {entry.Author.Nick}
+                      </a>
+                    </div>
+                    <div className="entry-date">
+                      <a
+                        rel="noreferrer"
+                        target="_blank"
+                        href={"https://eksisozluk.com/entry/" + entry.Id}
+                      >
+                        {entrydate(entry.Created)}
+                      </a>
+                    </div>
+                  </footer>
                 </div>
-                <div className="entry-date">
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href={"https://eksisozluk.com/entry/" + entry.Id}
-                  >
-                    {entrydate(entry.Created)}
-                  </a>
-                </div>
-              </footer>
+              ))}
             </div>
           ))}
         </ul>
@@ -99,11 +111,5 @@ const entrydate = (dt) => {
   const diff = new Date(Date.now() - new Date(dt));
   const mn = Math.floor(diff.getTime() / (1000 * 60));
   const sc = Math.floor(diff.getTime() / 1000);
-  if (mn && mn > 0) {
-    return `${mn} dk`;
-  } else if (sc > 0) {
-    return `${sc} sn`;
-  } else {
-    return "now";
-  }
+  return mn && mn > 0 ? `${mn} dk` : sc > 0 ? `${sc} sn` : "now";
 };
