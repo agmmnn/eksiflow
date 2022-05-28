@@ -33,14 +33,17 @@ export default function FlowContent({ pageidx }) {
     { refreshInterval: 1000 }
   );
 
+  let pageUrl =
+    "https://eksisozluk.com/" + data?.Data.Slug + "--" + data?.Data.Id;
+
   useEffect(() => {
     setEntryPool({});
   }, [pageidx]);
 
   useEffect(() => {
     setLastPage(data ? data.Data.PageCount : "1");
-    setEntryPool(data ? { ...entryPool, [lastPage]: data.Data.Entries } : {});
-    console.log(entryPool);
+    if (data) setEntryPool({ ...entryPool, [lastPage]: data.Data.Entries });
+    // console.log(entryPool);
   }, [data]);
 
   useEffect(() => {
@@ -51,13 +54,7 @@ export default function FlowContent({ pageidx }) {
   return (
     <>
       <div className="main-header">
-        <a
-          rel="noreferrer"
-          target="_blank"
-          href={
-            "https://eksisozluk.com/" + data?.Data.Slug + "--" + data?.Data.Id
-          }
-        >
+        <a rel="noreferrer" target="_blank" href={pageUrl}>
           {data?.Data.Title}
         </a>
       </div>
@@ -66,7 +63,13 @@ export default function FlowContent({ pageidx }) {
           {Object.entries(entryPool).map(([page, entries]) => (
             <div className="entry-page" key={page}>
               <div className="pager">
-                <span>{page}. sayfa ↓</span>
+                <a
+                  rel="noreferrer"
+                  target="_blank"
+                  href={pageUrl + "?p=" + page}
+                >
+                  <span>{page}. sayfa ↓</span>
+                </a>
               </div>
               {entries.map((entry) => (
                 <div className="entry" key={entry.Id}>
@@ -113,3 +116,9 @@ const entrydate = (dt) => {
   const sc = Math.floor(diff.getTime() / 1000);
   return mn && mn > 0 ? `${mn} dk` : sc > 0 ? `${sc} sn` : "now";
 };
+
+// const processContent = (entry) => {
+//   let output;
+//   output = entry.match(/`(.*)`/);
+//   return output;
+// };
