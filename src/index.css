@@ -284,7 +284,7 @@ body {
   padding-bottom: 20px;
   overflow: auto;
   max-width: 711px;
-  /* flex-direction: column-reverse; */
+  flex-direction: column-reverse;
 }
 .main-container::before {
   content: "";
@@ -369,6 +369,12 @@ body {
 .main-container-footer {
   padding: 0px;
   display: flex;
+}
+.main-container .threeDot {
+  font-size: 36px;
+  color: var(--border-color);
+  text-align: center;
+  padding: 20px;
 }
 
 .anim {
