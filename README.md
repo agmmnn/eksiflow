@@ -14,7 +14,7 @@ ekşi sözlük için canlı akış uygulaması. mevcut başlıktaki son etryleri
 - [ ] Load the previous page when scrolling to the top.
 - [ ] Fix double page loading when clicking on sidebar.
 - [ ] Sound Notification.
-- [ ] Theme-Switcher.
+- [x] Theme-Switcher.
 - [ ] Implement Search Feature.
 
 ### Development
