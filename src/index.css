@@ -336,6 +336,9 @@ body {
   border: var(--border-color) solid 1px;
   border-radius: 1rem;
 }
+.pager a {
+  text-decoration: none;
+}
 
 .entry {
   padding: 15px 0 15px 0;
