@@ -1,8 +1,8 @@
 import useSWR from "swr";
 import axios from "axios";
-import genToken from "./_gentoken";
+import genToken from "./gentoken";
 import FlowContent from "./FlowContent";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 

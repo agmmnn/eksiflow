@@ -352,6 +352,7 @@ body {
 }
 .entry:last-child {
   padding: 0;
+  padding-top: 15px;
 }
 .main-container-footer {
   padding: 0px;

@@ -1,11 +1,11 @@
 import useSWR from "swr";
 import axios from "axios";
-import genToken from "./_gentoken";
+import genToken from "./gentoken";
 import { useState, useEffect, useRef } from "react";
 
 const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
-export default function FlowEntryList({ pageidx }) {
+export default function FlowContent({ pageidx }) {
   const fetcher = (url) =>
     genToken()
       .then((token) =>
@@ -29,7 +29,11 @@ export default function FlowEntryList({ pageidx }) {
   );
 
   useEffect(() => {
-    footerDiv.current.scrollIntoView();
+    try {
+      footerDiv.current.scrollIntoView();
+    } catch (err) {
+      console.log(err);
+    }
   });
   useEffect(() => {
     setLastPage(data ? data.Data.PageCount : "1");
